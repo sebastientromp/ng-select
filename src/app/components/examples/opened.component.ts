@@ -1,14 +1,13 @@
-import {AfterViewInit, Component, ElementRef} from '@angular/core';
-import {IOption} from 'ng-select';
+import { AfterViewInit, Component, ElementRef } from "@angular/core";
+import { IOption } from "@firestone-hs/ng-select";
+import { OptionService } from "../../services/option.service";
 declare var hljs: any;
-import {OptionService} from '../../services/option.service';
 
 @Component({
-    selector: 'opened',
-    templateUrl: './opened.component.html'
+    selector: "opened",
+    templateUrl: "./opened.component.html",
 })
 export class Opened implements AfterViewInit {
-
     characters: Array<IOption> = this.optionService.getCharacters();
     isOpen0: boolean = false;
     isOpen1: boolean = false;
@@ -20,9 +19,9 @@ export class Opened implements AfterViewInit {
 
     ngAfterViewInit() {
         hljs.initHighlighting();
-        let nodes: NodeList = this.elementRef
-            .nativeElement
-            .querySelectorAll('.typescript, .html, .css');
+        let nodes: NodeList = this.elementRef.nativeElement.querySelectorAll(
+            ".typescript, .html, .css"
+        );
 
         for (let i = 0; i < nodes.length; i++) {
             hljs.highlightBlock(nodes[i]);
@@ -59,5 +58,4 @@ export class Opened implements AfterViewInit {
     (focus)="isOpen = true"&gt;
 &lt;/ng-select&gt;
 </code></pre>`;
-
 }

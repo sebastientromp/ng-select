@@ -1,26 +1,42 @@
-import {Component, HostListener, Input, OnChanges, OnInit, Output, EventEmitter, ExistingProvider, ViewChild, ViewEncapsulation, forwardRef, ElementRef, SimpleChange, SimpleChanges, ContentChild, TemplateRef} from '@angular/core';
-import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
-import {SelectDropdownComponent} from './select-dropdown.component';
-import {IOption} from './option.interface';
-import {Option} from './option';
-import {OptionList} from './option-list';
+import {
+    Component,
+    ContentChild,
+    ElementRef,
+    EventEmitter,
+    ExistingProvider,
+    HostListener,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+    TemplateRef,
+    ViewChild,
+    ViewEncapsulation,
+    forwardRef,
+} from "@angular/core";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { Option } from "./option";
+import { OptionList } from "./option-list";
+import { IOption } from "./option.interface";
+import { SelectDropdownComponent } from "./select-dropdown.component";
 
 export const SELECT_VALUE_ACCESSOR: ExistingProvider = {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => SelectComponent),
-    multi: true
+    multi: true,
 };
 
 @Component({
-    selector: 'ng-select',
-    templateUrl: 'select.component.html',
-    styleUrls: ['select.component.scss'],
+    selector: "@firestone-hs/ng-select",
+    templateUrl: "select.component.html",
+    styleUrls: ["select.component.scss"],
     providers: [SELECT_VALUE_ACCESSOR],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
 })
-
-export class SelectComponent implements ControlValueAccessor, OnChanges, OnInit {
-
+export class SelectComponent
+    implements ControlValueAccessor, OnChanges, OnInit
+{
     // Data input.
     @Input() options: Array<IOption> = [];
 
@@ -35,10 +51,10 @@ export class SelectComponent implements ControlValueAccessor, OnChanges, OnInit 
     @Input() highlightTextColor: string;
 
     // Text settings.
-    @Input() notFoundMsg: string = 'No results found';
-    @Input() placeholder: string = '';
-    @Input() filterPlaceholder: string = '';
-    @Input() label: string = '';
+    @Input() notFoundMsg: string = "No results found";
+    @Input() placeholder: string = "";
+    @Input() filterPlaceholder: string = "";
+    @Input() label: string = "";
 
     // Output events.
     @Output() opened = new EventEmitter<null>();
@@ -50,11 +66,12 @@ export class SelectComponent implements ControlValueAccessor, OnChanges, OnInit 
     @Output() noOptionsFound = new EventEmitter<string>();
     @Output() filterInputChanged = new EventEmitter<string>();
 
-    @ViewChild('selection', { static: true }) selectionSpan: ElementRef;
-    @ViewChild('dropdown', { static: false }) dropdown: SelectDropdownComponent;
-    @ViewChild('filterInput', { static: false }) filterInput: ElementRef;
+    @ViewChild("selection", { static: true }) selectionSpan: ElementRef;
+    @ViewChild("dropdown", { static: false }) dropdown: SelectDropdownComponent;
+    @ViewChild("filterInput", { static: false }) filterInput: ElementRef;
 
-    @ContentChild('optionTemplate', { static: false }) optionTemplate: TemplateRef<any>;
+    @ContentChild("optionTemplate", { static: false })
+    optionTemplate: TemplateRef<any>;
 
     private _value: Array<any> = [];
     optionList: OptionList = new OptionList([]);
@@ -67,7 +84,7 @@ export class SelectComponent implements ControlValueAccessor, OnChanges, OnInit 
     filterEnabled: boolean = true;
     filterInputWidth: number = 1;
     private isDisabled: boolean = false;
-    placeholderView: string = '';
+    placeholderView: string = "";
 
     private clearClicked: boolean = false;
     private selectContainerClicked: boolean = false;
@@ -82,9 +99,7 @@ export class SelectComponent implements ControlValueAccessor, OnChanges, OnInit 
     private onChange = (_: any) => {};
     private onTouched = () => {};
 
-    constructor(
-        private hostElement: ElementRef
-    ) {}
+    constructor(private hostElement: ElementRef) {}
 
     /** Event handlers. **/
 
@@ -100,15 +115,18 @@ export class SelectComponent implements ControlValueAccessor, OnChanges, OnInit 
         this.updateState();
     }
 
-    @HostListener('window:blur')
+    @HostListener("window:blur")
     onWindowBlur() {
         this._blur();
     }
 
-    @HostListener('window:click')
+    @HostListener("window:click")
     onWindowClick() {
-        if (!this.selectContainerClicked &&
-            (!this.optionListClicked || (this.optionListClicked && this.optionClicked))) {
+        if (
+            !this.selectContainerClicked &&
+            (!this.optionListClicked ||
+                (this.optionListClicked && this.optionClicked))
+        ) {
             this.closeDropdown(this.optionClicked);
             if (!this.optionClicked) {
                 this._blur();
@@ -120,7 +138,7 @@ export class SelectComponent implements ControlValueAccessor, OnChanges, OnInit 
         this.optionClicked = false;
     }
 
-    @HostListener('window:resize')
+    @HostListener("window:resize")
     onWindowResize() {
         this.updateWidth();
     }
@@ -146,7 +164,9 @@ export class SelectComponent implements ControlValueAccessor, OnChanges, OnInit 
 
     onDropdownOptionClicked(option: Option) {
         this.optionClicked = true;
-        this.multiple ? this.toggleSelectOption(option) : this.selectOption(option);
+        this.multiple
+            ? this.toggleSelectOption(option)
+            : this.selectOption(option);
     }
 
     onSingleFilterClick() {
@@ -225,9 +245,9 @@ export class SelectComponent implements ControlValueAccessor, OnChanges, OnInit 
     /** Input change handling. **/
 
     private handleInputChanges(changes: SimpleChanges) {
-        let optionsChanged: boolean = changes.hasOwnProperty('options');
-        let noFilterChanged: boolean = changes.hasOwnProperty('noFilter');
-        let placeholderChanged: boolean = changes.hasOwnProperty('placeholder');
+        let optionsChanged: boolean = changes.hasOwnProperty("options");
+        let noFilterChanged: boolean = changes.hasOwnProperty("noFilter");
+        let placeholderChanged: boolean = changes.hasOwnProperty("placeholder");
 
         if (optionsChanged) {
             this.updateOptionList(changes.options.currentValue);
@@ -257,14 +277,12 @@ export class SelectComponent implements ControlValueAccessor, OnChanges, OnInit 
     }
 
     set value(v: string | string[]) {
-        if (typeof v === 'undefined' || v === null || v === '') {
+        if (typeof v === "undefined" || v === null || v === "") {
             v = [];
-        }
-        else if (typeof v === 'string') {
+        } else if (typeof v === "string") {
             v = [v];
-        }
-        else if (!Array.isArray(v)) {
-            throw new TypeError('Value must be a string or an array.');
+        } else if (!Array.isArray(v)) {
+            throw new TypeError("Value must be a string or an array.");
         }
 
         this.optionList.value = v;
@@ -279,7 +297,9 @@ export class SelectComponent implements ControlValueAccessor, OnChanges, OnInit 
     }
 
     private updateState() {
-        this.placeholderView = this.optionList.hasSelected ? '' : this.placeholder;
+        this.placeholderView = this.optionList.hasSelected
+            ? ""
+            : this.placeholder;
         setTimeout(() => {
             this.updateFilterWidth();
         });
@@ -321,15 +341,18 @@ export class SelectComponent implements ControlValueAccessor, OnChanges, OnInit 
 
             if (selection.length === 1) {
                 this.deselected.emit(selection[0].wrappedOption);
-            }
-            else {
-                this.deselected.emit(selection.map(option => option.wrappedOption));
+            } else {
+                this.deselected.emit(
+                    selection.map((option) => option.wrappedOption)
+                );
             }
         }
     }
 
     private toggleSelectOption(option: Option) {
-        option.selected ? this.deselectOption(option) : this.selectOption(option);
+        option.selected
+            ? this.deselectOption(option)
+            : this.selectOption(option);
     }
 
     private selectHighlightedOption() {
@@ -346,7 +369,7 @@ export class SelectComponent implements ControlValueAccessor, OnChanges, OnInit 
         if (sel.length > 0) {
             let option: Option = sel[sel.length - 1];
             this.deselectOption(option);
-            this.setMultipleFilterInput(option.label + ' ');
+            this.setMultipleFilterInput(option.label + " ");
         }
     }
 
@@ -403,7 +426,7 @@ export class SelectComponent implements ControlValueAccessor, OnChanges, OnInit 
 
     private clearFilterInput() {
         if (this.multiple && this.filterEnabled) {
-            this.filterInput.nativeElement.value = '';
+            this.filterInput.nativeElement.value = "";
         }
     }
 
@@ -422,64 +445,67 @@ export class SelectComponent implements ControlValueAccessor, OnChanges, OnInit 
         ESC: 27,
         SPACE: 32,
         UP: 38,
-        DOWN: 40
+        DOWN: 40,
     };
 
     private handleSelectContainerKeydown(event: any) {
         let key = event.which;
 
         if (this.isOpen) {
-            if (key === this.KEYS.ESC || (key === this.KEYS.UP && event.altKey)) {
+            if (
+                key === this.KEYS.ESC ||
+                (key === this.KEYS.UP && event.altKey)
+            ) {
                 this.closeDropdown(true);
-            }
-            else if (key === this.KEYS.TAB) {
+            } else if (key === this.KEYS.TAB) {
                 this.closeDropdown(event.shiftKey);
                 this._blur();
-            }
-            else if (key === this.KEYS.ENTER) {
+            } else if (key === this.KEYS.ENTER) {
                 this.selectHighlightedOption();
-            }
-            else if (key === this.KEYS.UP) {
+            } else if (key === this.KEYS.UP) {
                 this.optionList.highlightPreviousOption();
                 this.dropdown.moveHighlightedIntoView();
                 if (!this.filterEnabled) {
                     event.preventDefault();
                 }
-            }
-            else if (key === this.KEYS.DOWN) {
+            } else if (key === this.KEYS.DOWN) {
                 this.optionList.highlightNextOption();
                 this.dropdown.moveHighlightedIntoView();
                 if (!this.filterEnabled) {
                     event.preventDefault();
                 }
             }
-        }
-        else {
+        } else {
             // DEPRICATED --> SPACE
-            if (key === this.KEYS.ENTER || key === this.KEYS.SPACE ||
-                    (key === this.KEYS.DOWN && event.altKey)) {
-
+            if (
+                key === this.KEYS.ENTER ||
+                key === this.KEYS.SPACE ||
+                (key === this.KEYS.DOWN && event.altKey)
+            ) {
                 /* FIREFOX HACK:
                  *
                  * The setTimeout is added to prevent the enter keydown event
                  * to be triggered for the filter input field, which causes
                  * the dropdown to be closed again.
                  */
-                setTimeout(() => { this.openDropdown(); });
-            }
-            else if (key === this.KEYS.TAB) {
+                setTimeout(() => {
+                    this.openDropdown();
+                });
+            } else if (key === this.KEYS.TAB) {
                 this._blur();
             }
         }
-
     }
 
     private handleMultipleFilterKeydown(event: any) {
         let key = event.which;
 
         if (key === this.KEYS.BACKSPACE) {
-            if (this.optionList.hasSelected && this.filterEnabled &&
-                    this.filterInput.nativeElement.value === '') {
+            if (
+                this.optionList.hasSelected &&
+                this.filterEnabled &&
+                this.filterInput.nativeElement.value === ""
+            ) {
                 this.deselectLast();
             }
         }
@@ -488,9 +514,13 @@ export class SelectComponent implements ControlValueAccessor, OnChanges, OnInit 
     private handleSingleFilterKeydown(event: any) {
         let key = event.which;
 
-        if (key === this.KEYS.ESC || key === this.KEYS.TAB
-                || key === this.KEYS.UP || key === this.KEYS.DOWN
-                || key === this.KEYS.ENTER) {
+        if (
+            key === this.KEYS.ESC ||
+            key === this.KEYS.TAB ||
+            key === this.KEYS.UP ||
+            key === this.KEYS.DOWN ||
+            key === this.KEYS.ENTER
+        ) {
             this.handleSelectContainerKeydown(event);
         }
     }
@@ -517,29 +547,37 @@ export class SelectComponent implements ControlValueAccessor, OnChanges, OnInit 
     }
 
     private updateWidth() {
-        this.width = this.selectionSpan.nativeElement.getBoundingClientRect().width;
+        this.width =
+            this.selectionSpan.nativeElement.getBoundingClientRect().width;
     }
 
     private updatePosition() {
-        if (typeof this.dropdown !== 'undefined') {
-            const hostRect = this.hostElement.nativeElement.getBoundingClientRect();
-            const spanRect = this.selectionSpan.nativeElement.getBoundingClientRect();
-            const dropRect = this.dropdown.hostElement.nativeElement.firstElementChild.getBoundingClientRect();
+        if (typeof this.dropdown !== "undefined") {
+            const hostRect =
+                this.hostElement.nativeElement.getBoundingClientRect();
+            const spanRect =
+                this.selectionSpan.nativeElement.getBoundingClientRect();
+            const dropRect =
+                this.dropdown.hostElement.nativeElement.firstElementChild.getBoundingClientRect();
             const windowHeight = window.innerHeight;
             const top = spanRect.top - hostRect.top;
             const bottom = hostRect.bottom + dropRect.height;
 
             this.isBelow = bottom < windowHeight;
             this.left = spanRect.left - hostRect.left;
-            this.top = this.isBelow ? top + spanRect.height : top - dropRect.height;
+            this.top = this.isBelow
+                ? top + spanRect.height
+                : top - dropRect.height;
         }
     }
 
     private updateFilterWidth() {
-        if (typeof this.filterInput !== 'undefined') {
+        if (typeof this.filterInput !== "undefined") {
             let value: string = this.filterInput.nativeElement.value;
-            this.filterInputWidth = value.length === 0 ?
-                1 + this.placeholderView.length * 10 : 1 + value.length * 10;
+            this.filterInputWidth =
+                value.length === 0
+                    ? 1 + this.placeholderView.length * 10
+                    : 1 + value.length * 10;
         }
     }
 }

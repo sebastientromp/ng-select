@@ -1,21 +1,20 @@
-import {AfterViewInit, Component, ElementRef} from '@angular/core';
-import {Subscription} from 'rxjs';
-import {IOption} from 'ng-select';
+import { AfterViewInit, Component, ElementRef } from "@angular/core";
+import { IOption } from "@firestone-hs/ng-select";
+import { OptionService } from "../../services/option.service";
 declare var hljs: any;
-import {OptionService} from '../../services/option.service';
 
 @Component({
-    selector: 'option-template',
-    templateUrl: 'option-template.component.html',
-    styleUrls: ['option-template.component.scss']
+    selector: "option-template",
+    templateUrl: "option-template.component.html",
+    styleUrls: ["option-template.component.scss"],
 })
 export class OptionTemplate implements AfterViewInit {
-
     countries: Array<IOption> = this.optionService.getCountries();
-    selectedCountry: string = 'NL';
-    selectedCountries: Array<string> = ['BE', 'LU', 'NL'];
+    selectedCountry: string = "NL";
+    selectedCountries: Array<string> = ["BE", "LU", "NL"];
 
-    markedCharacters: Array<IOption> = this.optionService.getCharactersWithMarked();
+    markedCharacters: Array<IOption> =
+        this.optionService.getCharactersWithMarked();
 
     constructor(
         private elementRef: ElementRef,
@@ -24,9 +23,9 @@ export class OptionTemplate implements AfterViewInit {
 
     ngAfterViewInit() {
         hljs.initHighlighting();
-        let nodes: NodeList = this.elementRef
-            .nativeElement
-            .querySelectorAll('.typescript, .html, .css');
+        let nodes: NodeList = this.elementRef.nativeElement.querySelectorAll(
+            ".typescript, .html, .css"
+        );
 
         for (let i = 0; i < nodes.length; i++) {
             hljs.highlightBlock(nodes[i]);
@@ -125,5 +124,4 @@ export class OptionTemplate implements AfterViewInit {
     &lt;/ng-template&gt;
 &lt;/ng-select&gt;
 </code></pre>`;
-
 }

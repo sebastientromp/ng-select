@@ -1,25 +1,20 @@
-import {AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
-import {NavigationEnd, Router} from '@angular/router';
-
-import {SelectComponent, IOption} from 'ng-select';
+import { Component, ElementRef, HostListener, ViewChild } from "@angular/core";
+import { NavigationEnd, Router } from "@angular/router";
 
 declare var hljs: any;
 
 @Component({
-  selector: 'ng-select-app',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: "ng-select-app",
+    templateUrl: "./app.component.html",
+    styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
-
-    @ViewChild('mainContainer', { static: true }) mainContainer: ElementRef;
+    @ViewChild("mainContainer", { static: true }) mainContainer: ElementRef;
 
     static readonly SCREEN_BREAKPOINT: number = 600;
     smallScreen: boolean = false;
 
-    constructor(
-        public router: Router
-    ) {}
+    constructor(public router: Router) {}
 
     /** Event listeners **/
 
@@ -29,13 +24,13 @@ export class AppComponent {
             if (!(evt instanceof NavigationEnd)) {
                 return;
             }
-            if (evt.url.indexOf('/faq') === -1) {
+            if (evt.url.indexOf("/faq") === -1) {
                 this.mainContainer.nativeElement.scrollTop = 0;
             }
         });
     }
 
-    @HostListener('window:resize', ['$event'])
+    @HostListener("window:resize", ["$event"])
     onWindowResize(event) {
         this.updateScreen(event.target.innerWidth);
     }

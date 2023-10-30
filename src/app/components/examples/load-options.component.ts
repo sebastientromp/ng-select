@@ -1,17 +1,16 @@
-import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { IOption } from 'ng-select';
+import { AfterViewInit, Component, ElementRef, OnInit } from "@angular/core";
+import { IOption } from "@firestone-hs/ng-select";
+import { Subscription } from "rxjs";
+import { OptionService } from "../../services/option.service";
 declare var hljs: any;
-import { OptionService } from '../../services/option.service';
 
 @Component({
-    selector: 'load-options',
-    templateUrl: 'load-options.component.html'
+    selector: "load-options",
+    templateUrl: "load-options.component.html",
 })
 export class LoadOptions implements AfterViewInit, OnInit {
-
     characters: Array<IOption>;
-    selectedCharacter: string = '3';
+    selectedCharacter: string = "3";
     timeLeft: number = 5;
 
     private dataSub: Subscription = null;
@@ -23,20 +22,24 @@ export class LoadOptions implements AfterViewInit, OnInit {
 
     ngOnInit() {
         this.runTimer();
-        this.dataSub = this.optionService.loadCharacters().subscribe((options) => {
-            this.characters = options;
-        });
+        this.dataSub = this.optionService
+            .loadCharacters()
+            .subscribe((options) => {
+                this.characters = options;
+            });
     }
 
     ngOnDestroy() {
-        if (this.dataSub !== null) { this.dataSub.unsubscribe(); }
+        if (this.dataSub !== null) {
+            this.dataSub.unsubscribe();
+        }
     }
 
     ngAfterViewInit() {
         hljs.initHighlighting();
-        let nodes: NodeList = this.elementRef
-            .nativeElement
-            .querySelectorAll('.typescript, .html, .css');
+        let nodes: NodeList = this.elementRef.nativeElement.querySelectorAll(
+            ".typescript, .html, .css"
+        );
 
         for (let i = 0; i < nodes.length; i++) {
             hljs.highlightBlock(nodes[i]);
@@ -76,5 +79,4 @@ export class LoadOptions implements AfterViewInit, OnInit {
     }
 }
 </pre></code>`;
-
 }

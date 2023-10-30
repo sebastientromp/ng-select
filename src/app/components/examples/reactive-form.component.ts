@@ -1,18 +1,17 @@
-import {AfterViewInit, Component, ElementRef} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
-import {IOption} from 'ng-select';
+import { AfterViewInit, Component, ElementRef } from "@angular/core";
+import { FormControl, FormGroup } from "@angular/forms";
+import { IOption } from "@firestone-hs/ng-select";
+import { OptionService } from "../../services/option.service";
 declare var hljs: any;
-import {OptionService} from '../../services/option.service';
 
 @Component({
-    selector: 'reactive-form',
-    templateUrl: 'reactive-form.component.html'
+    selector: "reactive-form",
+    templateUrl: "reactive-form.component.html",
 })
 export class ReactiveForm implements AfterViewInit {
-
     characters: Array<IOption> = this.optionService.getCharacters();
-    defaultCharacter: string = '3';
-    defaultCharacters: Array<string> = ['1', '3'];
+    defaultCharacter: string = "3";
+    defaultCharacters: Array<string> = ["1", "3"];
     form0: FormGroup;
     form1: FormGroup;
 
@@ -23,18 +22,18 @@ export class ReactiveForm implements AfterViewInit {
 
     ngOnInit() {
         this.form0 = new FormGroup({
-            character: new FormControl(this.defaultCharacter)
+            character: new FormControl(this.defaultCharacter),
         });
         this.form1 = new FormGroup({
-            character: new FormControl(this.defaultCharacters)
+            character: new FormControl(this.defaultCharacters),
         });
     }
 
     ngAfterViewInit() {
         hljs.initHighlighting();
-        let nodes: NodeList = this.elementRef
-            .nativeElement
-            .querySelectorAll('.typescript, .html, .css');
+        let nodes: NodeList = this.elementRef.nativeElement.querySelectorAll(
+            ".typescript, .html, .css"
+        );
 
         for (let i = 0; i < nodes.length; i++) {
             hljs.highlightBlock(nodes[i]);
@@ -118,5 +117,4 @@ export class ReactiveForm implements AfterViewInit {
     }
 }
 </pre></code>`;
-
 }

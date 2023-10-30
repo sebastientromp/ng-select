@@ -1,17 +1,16 @@
-import {AfterViewInit, Component, ElementRef} from '@angular/core';
-import {IOption} from 'ng-select';
+import { AfterViewInit, Component, ElementRef } from "@angular/core";
+import { IOption } from "@firestone-hs/ng-select";
+import { OptionService } from "../../services/option.service";
 declare var hljs: any;
-import {OptionService} from '../../services/option.service';
 
 @Component({
-    selector: 'no-options-found',
-    templateUrl: './no-options-found.component.html'
+    selector: "no-options-found",
+    templateUrl: "./no-options-found.component.html",
 })
 export class NoOptionsFound implements AfterViewInit {
-
     characters: Array<IOption> = this.optionService.getCharacters();
-    noResultsTerm0: string = '';
-    noResultsTerm1: string = '';
+    noResultsTerm0: string = "";
+    noResultsTerm1: string = "";
 
     constructor(
         private elementRef: ElementRef,
@@ -28,9 +27,9 @@ export class NoOptionsFound implements AfterViewInit {
 
     ngAfterViewInit() {
         hljs.initHighlighting();
-        let nodes: NodeList = this.elementRef
-            .nativeElement
-            .querySelectorAll('.typescript, .html, .css');
+        let nodes: NodeList = this.elementRef.nativeElement.querySelectorAll(
+            ".typescript, .html, .css"
+        );
 
         for (let i = 0; i < nodes.length; i++) {
             hljs.highlightBlock(nodes[i]);
@@ -69,6 +68,4 @@ export class NoOptionsFound implements AfterViewInit {
     (noOptionsFound)="onNoOptionsFound($event)"&gt;
 &lt;/ng-select&gt;
 </code></pre>`;
-
-
 }

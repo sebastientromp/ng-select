@@ -1,14 +1,13 @@
-import {AfterViewInit, Component, ElementRef} from '@angular/core';
-import {IOption} from 'ng-select';
+import { AfterViewInit, Component, ElementRef } from "@angular/core";
+import { IOption } from "@firestone-hs/ng-select";
+import { OptionService } from "../../services/option.service";
 declare var hljs: any;
-import {OptionService} from '../../services/option.service';
 
 @Component({
-    selector: 'select-method',
-    templateUrl: './select-method.component.html'
+    selector: "select-method",
+    templateUrl: "./select-method.component.html",
 })
 export class SelectMethod implements AfterViewInit {
-
     characters: Array<IOption> = this.optionService.getCharacters();
 
     constructor(
@@ -18,9 +17,9 @@ export class SelectMethod implements AfterViewInit {
 
     ngAfterViewInit() {
         hljs.initHighlighting();
-        let nodes: NodeList = this.elementRef
-            .nativeElement
-            .querySelectorAll('.typescript, .html, .css');
+        let nodes: NodeList = this.elementRef.nativeElement.querySelectorAll(
+            ".typescript, .html, .css"
+        );
 
         for (let i = 0; i < nodes.length; i++) {
             hljs.highlightBlock(nodes[i]);
@@ -49,5 +48,4 @@ export class SelectMethod implements AfterViewInit {
     Select Art3mis and Parzival
 &lt;/button&gt;
 </code></pre>`;
-
 }

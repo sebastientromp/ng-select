@@ -1,16 +1,15 @@
-import {AfterViewInit, Component, ElementRef} from '@angular/core';
-import {IOption} from 'ng-select';
+import { AfterViewInit, Component, ElementRef } from "@angular/core";
+import { IOption } from "@firestone-hs/ng-select";
+import { OptionService } from "../../services/option.service";
 declare var hljs: any;
-import {OptionService} from '../../services/option.service';
 
 @Component({
-    selector: 'allow-clear',
-    templateUrl: './allow-clear.component.html'
+    selector: "allow-clear",
+    templateUrl: "./allow-clear.component.html",
 })
 export class AllowClear implements AfterViewInit {
-
     characters: Array<IOption> = this.optionService.getCharacters();
-    selectedCharacter: string = '3';
+    selectedCharacter: string = "3";
 
     constructor(
         private elementRef: ElementRef,
@@ -19,9 +18,9 @@ export class AllowClear implements AfterViewInit {
 
     ngAfterViewInit() {
         hljs.initHighlighting();
-        let nodes: NodeList = this.elementRef
-            .nativeElement
-            .querySelectorAll('.typescript, .html, .css');
+        let nodes: NodeList = this.elementRef.nativeElement.querySelectorAll(
+            ".typescript, .html, .css"
+        );
 
         for (let i = 0; i < nodes.length; i++) {
             hljs.highlightBlock(nodes[i]);

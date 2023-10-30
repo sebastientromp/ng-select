@@ -1,17 +1,16 @@
-import {AfterViewInit, Component, ElementRef} from '@angular/core';
-import {IOption} from 'ng-select';
+import { AfterViewInit, Component, ElementRef } from "@angular/core";
+import { IOption } from "@firestone-hs/ng-select";
+import { OptionService } from "../../services/option.service";
 declare var hljs: any;
-import {OptionService} from '../../services/option.service';
 
 @Component({
-    selector: 'selected',
-    templateUrl: './selected.component.html'
+    selector: "selected",
+    templateUrl: "./selected.component.html",
 })
 export class Selected implements AfterViewInit {
-
     characters: Array<IOption> = this.optionService.getCharacters();
-    msg0: string = '';
-    msg1: string = '';
+    msg0: string = "";
+    msg1: string = "";
 
     constructor(
         private elementRef: ElementRef,
@@ -36,9 +35,9 @@ export class Selected implements AfterViewInit {
 
     ngAfterViewInit() {
         hljs.initHighlighting();
-        let nodes: NodeList = this.elementRef
-            .nativeElement
-            .querySelectorAll('.typescript, .html, .css');
+        let nodes: NodeList = this.elementRef.nativeElement.querySelectorAll(
+            ".typescript, .html, .css"
+        );
 
         for (let i = 0; i < nodes.length; i++) {
             hljs.highlightBlock(nodes[i]);
@@ -84,5 +83,4 @@ export class Selected implements AfterViewInit {
     (deselected)="onDeselected($event)"&gt;
 &lt;/ng-select&gt;
 </code></pre>`;
-
 }

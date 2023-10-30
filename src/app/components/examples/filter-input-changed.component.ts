@@ -1,17 +1,16 @@
-import {AfterViewInit, Component, ElementRef} from '@angular/core';
-import {IOption} from 'ng-select';
+import { AfterViewInit, Component, ElementRef } from "@angular/core";
+import { IOption } from "@firestone-hs/ng-select";
+import { OptionService } from "../../services/option.service";
 declare var hljs: any;
-import {OptionService} from '../../services/option.service';
 
 @Component({
-    selector: 'filter-input-changed',
-    templateUrl: './filter-input-changed.component.html'
+    selector: "filter-input-changed",
+    templateUrl: "./filter-input-changed.component.html",
 })
 export class FilterInputChanged implements AfterViewInit {
-
     characters: Array<IOption> = this.optionService.getCharacters();
-    searchTerm0: string = '';
-    searchTerm1: string = '';
+    searchTerm0: string = "";
+    searchTerm1: string = "";
 
     constructor(
         private elementRef: ElementRef,
@@ -28,9 +27,9 @@ export class FilterInputChanged implements AfterViewInit {
 
     ngAfterViewInit() {
         hljs.initHighlighting();
-        let nodes: NodeList = this.elementRef
-            .nativeElement
-            .querySelectorAll('.typescript, .html, .css');
+        let nodes: NodeList = this.elementRef.nativeElement.querySelectorAll(
+            ".typescript, .html, .css"
+        );
 
         for (let i = 0; i < nodes.length; i++) {
             hljs.highlightBlock(nodes[i]);
@@ -69,6 +68,4 @@ export class FilterInputChanged implements AfterViewInit {
     (filterInputChanged)="onFilterInputChanged($event)"&gt;
 &lt;/ng-select&gt;
 </code></pre>`;
-
-
 }

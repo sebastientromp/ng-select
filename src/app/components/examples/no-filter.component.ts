@@ -1,15 +1,13 @@
-import {AfterViewInit, Component, ElementRef} from '@angular/core';
-import {Subscription} from 'rxjs';
-import {IOption} from 'ng-select';
+import { AfterViewInit, Component, ElementRef } from "@angular/core";
+import { IOption } from "@firestone-hs/ng-select";
+import { OptionService } from "../../services/option.service";
 declare var hljs: any;
-import {OptionService} from '../../services/option.service';
 
 @Component({
-    selector: 'no-filter',
-    templateUrl: 'no-filter.component.html'
+    selector: "no-filter",
+    templateUrl: "no-filter.component.html",
 })
 export class NoFilter implements AfterViewInit {
-
     characters: Array<IOption> = this.optionService.getCharacters();
     noFilterThreshold0: number = 6;
     noFilterThreshold1: number = 6;
@@ -29,9 +27,9 @@ export class NoFilter implements AfterViewInit {
 
     ngAfterViewInit() {
         hljs.initHighlighting();
-        let nodes: NodeList = this.elementRef
-            .nativeElement
-            .querySelectorAll('.typescript, .html, .css');
+        let nodes: NodeList = this.elementRef.nativeElement.querySelectorAll(
+            ".typescript, .html, .css"
+        );
 
         for (let i = 0; i < nodes.length; i++) {
             hljs.highlightBlock(nodes[i]);
@@ -52,7 +50,7 @@ export class NoFilter implements AfterViewInit {
     [options]="characters"
     [noFilter]="noFilterThreshold"&gt;
 &lt;/ng-select&gt;
-</code></pre>`
+</code></pre>`;
 
     ts0: string = `
 <pre><code class="typescript">export class NoFilterExample {
@@ -85,6 +83,5 @@ export class NoFilter implements AfterViewInit {
     [multiple]="true"
     [noFilter]="noFilterThreshold"&gt;
 &lt;/ng-select&gt;
-</code></pre>`
-
+</code></pre>`;
 }

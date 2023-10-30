@@ -1,16 +1,14 @@
-import {AfterViewInit, Component, ElementRef} from '@angular/core';
-import {Subscription} from 'rxjs';
-import {IOption} from 'ng-select';
+import { AfterViewInit, Component, ElementRef } from "@angular/core";
+import { IOption } from "@firestone-hs/ng-select";
+import { OptionService } from "../../services/option.service";
 declare var hljs: any;
-import {OptionService} from '../../services/option.service';
 
 @Component({
-    selector: 'intro',
-    templateUrl: 'intro.component.html'
+    selector: "intro",
+    templateUrl: "intro.component.html",
 })
 export class Intro implements AfterViewInit {
-
-    optionsId: string = 'characters';
+    optionsId: string = "characters";
     options: Array<IOption> = this.optionService.getCharacters();
 
     constructor(
@@ -24,32 +22,33 @@ export class Intro implements AfterViewInit {
     }
 
     onToggleChange() {
-        if (this.optionsId === 'characters') {
+        if (this.optionsId === "characters") {
             this.options = this.optionService.getCharacters();
-        }
-        else if (this.optionsId === 'countries') {
+        } else if (this.optionsId === "countries") {
             this.options = this.optionService.getCountries();
         }
-        setTimeout(() => {this.initHighlight();});
+        setTimeout(() => {
+            this.initHighlight();
+        });
         //this.optionsJson = `<pre><code class="json">${this.options | json}</code></pre>`;
     }
 
     private initHighlight() {
-        let nodes: NodeList = this.elementRef
-            .nativeElement
-            .querySelectorAll('.typescript, .html, .css, .json');
+        let nodes: NodeList = this.elementRef.nativeElement.querySelectorAll(
+            ".typescript, .html, .css, .json"
+        );
 
         for (let i = 0; i < nodes.length; i++) {
             hljs.highlightBlock(nodes[i]);
         }
     }
 
-    optionsJson: string = '';
+    optionsJson: string = "";
 
     optionServiceTs: string = `
 <pre><code class="typescript">import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {IOption} from 'ng-select';
+import {IOption} from '@firestone-hs/ng-select';
 
 @Injectable()
 export class OptionService {
@@ -87,5 +86,4 @@ export class OptionService {
     ];
 }
 </code></pre>`;
-
 }

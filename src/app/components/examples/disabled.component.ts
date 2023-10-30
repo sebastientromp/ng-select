@@ -1,19 +1,18 @@
-import {AfterViewInit, Component, ElementRef} from '@angular/core';
-import {IOption} from 'ng-select';
+import { AfterViewInit, Component, ElementRef } from "@angular/core";
+import { IOption } from "@firestone-hs/ng-select";
+import { OptionService } from "../../services/option.service";
 declare var hljs: any;
-import {OptionService} from '../../services/option.service';
 
 @Component({
-    selector: 'disabled',
-    templateUrl: './disabled.component.html'
+    selector: "disabled",
+    templateUrl: "./disabled.component.html",
 })
 export class Disabled implements AfterViewInit {
-
     characters: Array<IOption> = this.optionService.getCharacters();
     isDisabled0: boolean = true;
     isDisabled1: boolean = true;
-    selectedCharacter0: string = '3';
-    selectedCharacter1: Array<string> = ['1', '3'];
+    selectedCharacter0: string = "3";
+    selectedCharacter1: Array<string> = ["1", "3"];
 
     constructor(
         private elementRef: ElementRef,
@@ -22,9 +21,9 @@ export class Disabled implements AfterViewInit {
 
     ngAfterViewInit() {
         hljs.initHighlighting();
-        let nodes: NodeList = this.elementRef
-            .nativeElement
-            .querySelectorAll('.typescript, .html, .css');
+        let nodes: NodeList = this.elementRef.nativeElement.querySelectorAll(
+            ".typescript, .html, .css"
+        );
 
         for (let i = 0; i < nodes.length; i++) {
             hljs.highlightBlock(nodes[i]);
@@ -65,5 +64,4 @@ export class Disabled implements AfterViewInit {
     &lt;span&gt;able&lt;/span&gt;
 &lt;/button&gt;
 </code></pre>`;
-
 }
