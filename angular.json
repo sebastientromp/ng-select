@@ -10,17 +10,17 @@
             "prefix": "app",
             "schematics": {
                 "@schematics/angular:component": {
-                    "styleext": "sass"
+                    "style": "sass"
                 }
             },
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
+                    "builder": "@angular-devkit/build-angular:application",
                     "options": {
                         "outputPath": "dist/ng-select-demo",
                         "index": "src/index.html",
-                        "main": "src/main.ts",
-                        "polyfills": "src/polyfills.ts",
+                        "browser": "src/main.ts",
+                        "polyfills": ["zone.js"],
                         "tsConfig": "src/tsconfig.app.json",
                         "assets": ["src/favicon.ico", "src/assets"],
                         "styles": ["src/styles.css", "src/style/base.scss"],
@@ -37,12 +37,8 @@
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
-                            "extractCss": true,
                             "namedChunks": false,
-                            "aot": true,
                             "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true,
                             "budgets": [
                                 {
                                     "type": "initial",
@@ -50,46 +46,45 @@
                                     "maximumError": "5mb"
                                 }
                             ]
+                        },
+                        "development": {
+                            "optimization": false,
+                            "extractLicenses": false,
+                            "sourceMap": true
                         }
-                    }
+                    },
+                    "defaultConfiguration": "production"
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "ng-select-demo:build"
+                        "buildTarget": "ng-select-demo:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "ng-select-demo:build:production"
+                            "buildTarget": "ng-select-demo:build:production"
+                        },
+                        "development": {
+                            "buildTarget": "ng-select-demo:build:development"
                         }
-                    }
+                    },
+                    "defaultConfiguration": "development"
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "ng-select-demo:build"
+                        "buildTarget": "ng-select-demo:build"
                     }
                 },
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
                     "options": {
-                        "main": "src/test.ts",
-                        "polyfills": "src/polyfills.ts",
+                        "polyfills": ["zone.js", "zone.js/testing"],
                         "tsConfig": "src/tsconfig.spec.json",
                         "karmaConfig": "src/karma.conf.js",
                         "styles": ["src/styles.css"],
                         "scripts": [],
                         "assets": ["src/favicon.ico", "src/assets"]
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "src/tsconfig.app.json",
-                            "src/tsconfig.spec.json"
-                        ],
-                        "exclude": ["**/node_modules/**"]
                     }
                 }
             }
@@ -110,13 +105,6 @@
                             "devServerTarget": "ng-select-demo:serve:production"
                         }
                     }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": "e2e/tsconfig.e2e.json",
-                        "exclude": ["**/node_modules/**"]
-                    }
                 }
             }
         },
@@ -129,32 +117,19 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:ng-packagr",
                     "options": {
-                        "tsConfig": "projects/ng-select/tsconfig.lib.json",
                         "project": "projects/ng-select/ng-package.json"
                     }
                 },
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
                     "options": {
-                        "main": "projects/ng-select/src/test.ts",
                         "tsConfig": "projects/ng-select/tsconfig.spec.json",
-                        "karmaConfig": "projects/ng-select/karma.conf.js"
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "projects/ng-select/tsconfig.lib.json",
-                            "projects/ng-select/tsconfig.spec.json"
-                        ],
-                        "exclude": ["**/node_modules/**"]
+                        "polyfills": ["zone.js", "zone.js/testing"]
                     }
                 }
             }
         }
     },
-    "defaultProject": "ng-select-demo",
     "cli": {
         "analytics": false
     }

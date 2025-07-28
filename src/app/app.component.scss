@@ -1,4 +1,4 @@
-@import '../style/variables';
+@import "../style/variables";
 
 .mat-sidenav-container {
     height: calc(100% - #{$toolbar-height});
@@ -9,7 +9,7 @@
     /** Content container **/
 
     .main-container {
-        background-color: mat-color($mat-grey, 100);
+        background-color: $mat-grey-100;
         height: 100%;
         left: 0px;
         overflow-y: auto;

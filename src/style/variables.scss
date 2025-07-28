@@ -1,13 +1,29 @@
-@import '~@angular/material/theming';
+@use "@angular/material" as mat;
 @import url(https://fonts.googleapis.com/css?family=Roboto+Slab:300,400,700|Open+Sans:400italic,700italic,400,700);
 
-@include mat-core();
+@include mat.core();
+
+// Define a light theme
+$light-theme: mat.define-theme(
+    (
+        color: (
+            theme-type: light,
+            primary: mat.$blue-palette,
+            tertiary: mat.$grey-palette,
+        ),
+        typography: (
+            brand-family: "Roboto",
+            plain-family: "Roboto",
+        ),
+        density: 0,
+    )
+);
 
 // Fonts.
 
 $font-size-base: 16px;
-$roboto: 'Roboto', sans-serif;
-$open-sans: 'Open Sans', sans-serif;
+$roboto: "Roboto", sans-serif;
+$open-sans: "Open Sans", sans-serif;
 $monospace: monospace;
 
 // Dimensions.
@@ -26,6 +42,11 @@ $nav-link-height: 30px;
 
 $bd-white: #fff;
 $bd-black: #000;
+
+// Material colors using new API
+$mat-grey-100: #f5f5f5;
+$mat-grey-600: #757575;
+$mat-blue-800: #1565c0;
 
 // Screen breakpoints.
 

@@ -1,15 +1,14 @@
+import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import {
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatIconModule,
-    MatInputModule,
-    MatMenuModule,
-    MatSidenavModule,
-    MatToolbarModule,
-} from "@angular/material";
+import { MatButtonModule } from "@angular/material/button";
+import { MatButtonToggleModule } from "@angular/material/button-toggle";
+import { MatCardModule } from "@angular/material/card";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatToolbarModule } from "@angular/material/toolbar";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
@@ -53,16 +52,28 @@ import { Selected } from "./components/examples/selected.component";
 import { OptionService } from "./services/option.service";
 
 @NgModule({
-    declarations: [
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        CommonModule,
+        FormsModule,
+        MatInputModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatCardModule,
+        MatButtonModule,
+        MatButtonToggleModule,
+        MatMenuModule,
+        MatIconModule,
+        ReactiveFormsModule,
+        RouterModule.forRoot(appRoutes, { useHash: true }),
+        SelectModule,
         AppComponent,
-
         Footer,
-
         Home,
         GettingStarted,
         Documentation,
         Faq,
-
         Intro,
         NgModel,
         LoadOptions,
@@ -85,22 +96,6 @@ import { OptionService } from "./services/option.service";
         NoOptionsFound,
         SelectMethod,
         ClearMethod,
-    ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        MatInputModule,
-        MatSidenavModule,
-        MatToolbarModule,
-        MatCardModule,
-        MatButtonModule,
-        MatButtonToggleModule,
-        MatMenuModule,
-        MatIconModule,
-        ReactiveFormsModule,
-        RouterModule.forRoot(appRoutes, { useHash: true }),
-        SelectModule,
     ],
     providers: [OptionService],
     bootstrap: [AppComponent],

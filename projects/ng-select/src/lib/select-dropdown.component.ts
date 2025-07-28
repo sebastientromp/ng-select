@@ -1,17 +1,29 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild, TemplateRef, ViewEncapsulation} from '@angular/core';
-import {Option} from './option';
-import {OptionList} from './option-list';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    TemplateRef,
+    ViewChild,
+    ViewEncapsulation,
+} from "@angular/core";
+import { Option } from "./option";
+import { OptionList } from "./option-list";
 
 @Component({
-    selector: 'select-dropdown',
-    templateUrl: 'select-dropdown.component.html',
-    styleUrls: ['select-dropdown.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    selector: "select-dropdown",
+    templateUrl: "select-dropdown.component.html",
+    styleUrls: ["select-dropdown.component.scss"],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false,
 })
-
 export class SelectDropdownComponent
-        implements AfterViewInit, OnChanges, OnInit {
-
+    implements AfterViewInit, OnChanges, OnInit
+{
     @Input() filterEnabled: boolean;
     @Input() highlightColor: string;
     @Input() highlightTextColor: string;
@@ -32,15 +44,13 @@ export class SelectDropdownComponent
     @Output() singleFilterInput = new EventEmitter<string>();
     @Output() singleFilterKeydown = new EventEmitter<any>();
 
-    @ViewChild('filterInput', { static: false }) filterInput: any;
-    @ViewChild('optionsList', { static: true }) optionsList: any;
+    @ViewChild("filterInput", { static: false }) filterInput: any;
+    @ViewChild("optionsList", { static: true }) optionsList: any;
 
-    disabledColor: string = '#fff';
-    disabledTextColor: string = '9e9e9e';
+    disabledColor: string = "#fff";
+    disabledTextColor: string = "9e9e9e";
 
-    constructor(
-        public hostElement: ElementRef
-    ) {}
+    constructor(public hostElement: ElementRef) {}
 
     /** Event handlers. **/
 
@@ -49,7 +59,7 @@ export class SelectDropdownComponent
     }
 
     ngOnChanges(changes: any) {
-        if (changes.hasOwnProperty('optionList')) {
+        if (changes.hasOwnProperty("optionList")) {
             this.optionsReset();
         }
     }
@@ -96,7 +106,7 @@ export class SelectDropdownComponent
     /** Initialization. **/
 
     private optionsReset() {
-        this.optionList.filter('');
+        this.optionList.filter("");
         this.optionList.highlight();
     }
 
@@ -106,21 +116,19 @@ export class SelectDropdownComponent
         if (option.highlighted) {
             let style: any = {};
 
-            if (typeof this.highlightColor !== 'undefined') {
-                style['background-color'] = this.highlightColor;
+            if (typeof this.highlightColor !== "undefined") {
+                style["background-color"] = this.highlightColor;
             }
-            if (typeof this.highlightTextColor !== 'undefined') {
-                style['color'] = this.highlightTextColor;
+            if (typeof this.highlightTextColor !== "undefined") {
+                style["color"] = this.highlightTextColor;
             }
             return style;
-        }
-        else {
+        } else {
             return {};
         }
     }
 
     moveHighlightedIntoView() {
-
         let list = this.optionsList.nativeElement;
         let listHeight = list.offsetHeight;
 
@@ -138,8 +146,7 @@ export class SelectDropdownComponent
 
             if (itemBottom > viewBottom) {
                 list.scrollTop = itemBottom - listHeight;
-            }
-            else if (itemTop < viewTop) {
+            } else if (itemTop < viewTop) {
                 list.scrollTop = itemTop;
             }
         }
@@ -152,8 +159,7 @@ export class SelectDropdownComponent
 
         if (atTop && e.deltaY < 0) {
             e.preventDefault();
-        }
-        else if (atBottom && e.deltaY > 0) {
+        } else if (atBottom && e.deltaY > 0) {
             e.preventDefault();
         }
     }

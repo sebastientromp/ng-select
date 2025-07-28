@@ -33,6 +33,7 @@ export const SELECT_VALUE_ACCESSOR: ExistingProvider = {
     styleUrls: ["select.component.scss"],
     providers: [SELECT_VALUE_ACCESSOR],
     encapsulation: ViewEncapsulation.None,
+    standalone: false,
 })
 export class SelectComponent
     implements ControlValueAccessor, OnChanges, OnInit

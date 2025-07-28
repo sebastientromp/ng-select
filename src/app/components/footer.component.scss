@@ -1,4 +1,4 @@
-@import '../../style/variables';
+@import "../../style/variables";
 
 .footer-container {
     margin-top: 24px;
@@ -19,12 +19,12 @@
     }
 
     .footer-text {
-        color: mat-color($mat-grey, 600);
+        color: $mat-grey-600;
         font-size: 0.9em;
         text-align: center;
         margin-top: 12px;
 
-        >div {
+        > div {
             padding: 3px 0;
         }
     }
